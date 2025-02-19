@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "helloworld",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/helloworld/bin/Debug/net6.0/helloworld.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/helloworld",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "classes",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/classes/bin/Debug/net6.0/classes.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/classes",
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run Both Projects",
+            "configurations": ["helloworld", "classes"]
+        }
+    ]
+}
