@@ -12,3 +12,4 @@ C:\Users\fazius\GitHub_projects\helloworld\obj\Debug\net9.0\refint\helloworld.dl
 C:\Users\fazius\GitHub_projects\helloworld\obj\Debug\net9.0\helloworld.pdb
 C:\Users\fazius\GitHub_projects\helloworld\obj\Debug\net9.0\helloworld.genruntimeconfig.cache
 C:\Users\fazius\GitHub_projects\helloworld\obj\Debug\net9.0\ref\helloworld.dll
+C:\Users\fazius\GitHub_projects\helloworld\obj\Debug\net9.0\helloworld.sourcelink.json
