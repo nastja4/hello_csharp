@@ -1,30 +1,22 @@
-﻿int numericValue;
-bool validEntry;
+﻿bool validEntry;
+string? readResult;
+string editedInput;
 
-Console.WriteLine("Enter an integer value between 5 and 10.");
-
-do 
+do
 {
-    string? readResult = Console.ReadLine();
+    Console.WriteLine("Enter your role name (Administrator, Manager, or User)");
+    readResult = Console.ReadLine();
 
-    if (int.TryParse(readResult, out numericValue))
+    editedInput = readResult.Trim().ToLower();
+    if (editedInput == "administrator" || editedInput == "manager" || editedInput == "user")
     {
-        if (numericValue > 5 && numericValue < 10)
-        {
-            validEntry = true;
-        }
-        else
-        {
-            validEntry = false;
-            Console.WriteLine($"You entered {numericValue}. Please enter a number between 5 and 10.");
-        }
+        validEntry = true;
     }
     else
     {
         validEntry = false;
-        Console.WriteLine("Sorry, you entered an invalid input, please try again.");
+        Console.WriteLine($"The role name that you entered, '{readResult}' is not valid. Enter your role name (Administrator, Manager, or User)");
     }
 } while (!validEntry);
 
-Console.WriteLine($"Your input value {numericValue} has been accepted.");
-
+Console.WriteLine($"Your input value {readResult} has been accepted.");
