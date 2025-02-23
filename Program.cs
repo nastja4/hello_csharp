@@ -1,22 +1,42 @@
-﻿bool validEntry;
-string? readResult;
-string editedInput;
+﻿// string[] myStrings = ["I like pizza. I like roast chicken. I like salad", "I like all three of the menu choices"];
+// int stringCount = myStrings.Length;
 
-do
+// string myString = "";
+// int periodLocation = 0;
+
+// for (int i = 0; i < stringCount; i++)
+// {
+//     myString = myStrings[i];
+//     periodLocation = myString.IndexOf(".");
+
+//     string mySentence;
+
+//     while (periodLocation != -1)
+//     {
+//         mySentence = myString.Remove(periodLocation);
+
+//         myString = myString.Substring(periodLocation + 1);
+
+//         myString = myString.TrimStart();
+
+//         periodLocation = myString.IndexOf(".");
+
+//         Console.WriteLine(mySentence);
+//     }
+
+//     mySentence = myString.Trim();
+//     Console.WriteLine(mySentence);
+// }
+
+
+string[] myStrings = ["I like pizza. I like roast chicken. I like salad", "I like all three of the menu choices"];
+
+foreach (string sentenceGroup in myStrings)
 {
-    Console.WriteLine("Enter your role name (Administrator, Manager, or User)");
-    readResult = Console.ReadLine();
+    string[] sentences = sentenceGroup.Split('.', StringSplitOptions.RemoveEmptyEntries);
 
-    editedInput = readResult.Trim().ToLower();
-    if (editedInput == "administrator" || editedInput == "manager" || editedInput == "user")
+    foreach (string sentence in sentences)
     {
-        validEntry = true;
+        Console.WriteLine(sentence.Trim());
     }
-    else
-    {
-        validEntry = false;
-        Console.WriteLine($"The role name that you entered, '{readResult}' is not valid. Enter your role name (Administrator, Manager, or User)");
-    }
-} while (!validEntry);
-
-Console.WriteLine($"Your input value {readResult} has been accepted.");
+}
