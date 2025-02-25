@@ -14,8 +14,6 @@ string menuSelection = "";
 // array used to store runtime data, there is no persisted data
 string[,] ourAnimals = new string[maxPets, 6];
 
-// TODO: Convert the if-elseif-else construct to a switch statement
-
 // create some initial ourAnimals array entries
 for (int i = 0; i < maxPets; i++)
 {
@@ -71,7 +69,6 @@ for (int i = 0; i < maxPets; i++)
     ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
 }
 
-
 do
 {
     // display the top-level menu options
@@ -95,12 +92,7 @@ do
         menuSelection = readResult.ToLower();
     }
 
-    //Console.WriteLine($"You selected menu option {menuSelection}.");
-    //Console.WriteLine("Press the Enter key to continue");
-
-    // pause code execution
-    //readResult = Console.ReadLine();
-
+    // use switch-case to process the selected menu option
     switch (menuSelection)
     {
         case "1":
@@ -119,7 +111,6 @@ do
             Console.WriteLine("Press the Enter key to continue");
             readResult = Console.ReadLine();
             break;
-
 
         case "2":
             // Add a new animal friend to the ourAnimals array
@@ -164,7 +155,7 @@ do
                 // build the animal the ID number - for example C1, C2, D3 (for Cat 1, Cat 2, Dog 3)
                 animalID = animalSpecies.Substring(0, 1) + (petCount + 1).ToString();
 
-                // get the pet's age. Can be ? at initial entry.
+                // get the pet's age - can be ? at initial entry.
                 do
                 {
                     int petAge;
@@ -237,10 +228,13 @@ do
                 ourAnimals[petCount, 4] = "Physical description: " + animalPhysicalDescription;
                 ourAnimals[petCount, 5] = "Personality: " + animalPersonalityDescription;
 
-
+                // increment petCount (the array is zero-based, so we increment the counter after adding to the array)
                 petCount++;   
+
+                // check maxPet limit
                 if (petCount < maxPets)
                 {
+                    // another pet?
                     Console.WriteLine("Do you want to enter info for another pet (y/n)");
                     do 
                     {
@@ -261,37 +255,42 @@ do
             }            
             break;
 
-
         case "3":
             // Ensure animal ages and physical descriptions are complete
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
+
         case "4":
             // Ensure animal nicknames and personality descriptions are complete
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
+
         case "5":
             // Edit an animal’s age
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
+
         case "6":
             // Edit an animal’s personality description
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
+
         case "7":
             // Display all cats with a specified characteristic
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
+
         case "8":
             // Display all dogs with a specified characteristic
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
+            
         default:
             break;
     }
