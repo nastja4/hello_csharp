@@ -120,48 +120,81 @@ do
             readResult = Console.ReadLine();
             break;
 
+
         case "2":
             // Add a new animal friend to the ourAnimals array
-            Console.WriteLine("This app feature is coming soon - please check back to see progress.");
-            Console.WriteLine("Press the Enter key to continue");
+            string anotherPet = "y";
+            int petCount = 0;
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] != "ID #: ")
+                {
+                    petCount++;
+                }
+            }
+
+            if (petCount < maxPets)
+            {
+                Console.WriteLine($"We currently have {petCount} pets that need homes. We can manage {(maxPets - petCount)} more.");
+            }
+
+            while (anotherPet == "y" && petCount < maxPets)
+            {
+                petCount++;   
+
+                if (petCount < maxPets)
+                {
+                    Console.WriteLine("Do you want to enter info for another pet (y/n)");
+                    do 
+                    {
+                        readResult = Console.ReadLine();
+                        if (readResult != null)
+                        {
+                            anotherPet = readResult.ToLower();
+                        }
+                    } while (anotherPet != "y" && anotherPet != "n");
+                }
+            }
+            
+            if (petCount >= maxPets)
+            {
+                Console.WriteLine("We have reached our limit on the number of pets that we can manage.");
+                Console.WriteLine("Press the Enter key to continue");
+                readResult = Console.ReadLine();
+            }            
             break;
+
 
         case "3":
             // Ensure animal ages and physical descriptions are complete
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
-
         case "4":
             // Ensure animal nicknames and personality descriptions are complete
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
-
         case "5":
             // Edit an animal’s age
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
-
         case "6":
             // Edit an animal’s personality description
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
-
         case "7":
             // Display all cats with a specified characteristic
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
-
         case "8":
             // Display all dogs with a specified characteristic
             Console.WriteLine("This app feature is coming soon - please check back to see progress.");
             Console.WriteLine("Press the Enter key to continue");
             break;
-
         default:
             break;
     }
