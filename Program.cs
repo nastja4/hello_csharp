@@ -1,15 +1,23 @@
-﻿string message = "What is the value <span>between the tags</span>?";
+﻿string message = "(What if) I am (only interested) in the last (set of parentheses)?";
 
-const string openSpan = "<span>";
-const string closeSpan = "</span>";
+while (true)
+{
+    int openingPosition = message.IndexOf('(');
+    if (openingPosition == -1) break;
 
-int openingPosition = message.IndexOf("<span>");
-int closingPosition = message.IndexOf("</span>");
+    openingPosition += 1;
+    int closingPosition = message.IndexOf(')');
+    int length = closingPosition - openingPosition;
+    Console.WriteLine(message.Substring(openingPosition, length));
 
-openingPosition += openSpan.Length;
-int length = closingPosition - openingPosition;
-Console.WriteLine(message.Substring(openingPosition, length));
+    // Note the overload of the Substring to return only the remaining 
+    // unprocessed message:
+    message = message.Substring(closingPosition + 1);
+}
 
 /*
-between the tags
+What if
+only interested
+set of parentheses
 */
+
