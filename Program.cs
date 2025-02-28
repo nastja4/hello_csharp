@@ -1,23 +1,16 @@
 ﻿using System.Globalization;
 using System.Text;
-
-// Set console encoding to UTF-8
 Console.OutputEncoding = Encoding.UTF8;
 CultureInfo germanCulture = new("de-DE");
 
+int invoiceNumber = 1201;
+decimal productShares = 25.4568m;
+decimal subtotal = 2750.00m;
+decimal taxPercentage = .15825m;
+decimal total = 3185.19m;
 
-decimal price = 123.45m;
-int discount = 50;
-Console.WriteLine($"Price: {price:C} (Save {discount:C})\n");
-
-decimal measurement = 123456.78912m;
-Console.WriteLine($"Measurement: {measurement:N} units\n");
-
-decimal tax = .36785m;
-Console.WriteLine($"Tax rate: {tax:P2}\n");
-
-decimal price2 = 67.55m;
-decimal salePrice = 59.99m;
-string yourDiscount = String.Format("You saved {0:C2} off the regular {1:C2} price. ", (price2 - salePrice).ToString("C", germanCulture), price2.ToString("C", germanCulture));
-yourDiscount += $"A discount of {((price2 - salePrice)/price2):P2}!";
-Console.WriteLine(yourDiscount);
+Console.WriteLine($"Invoice Number: {invoiceNumber}");
+Console.WriteLine($" Shares: {productShares:N3} Product");
+Console.WriteLine($"  Sub Total: {subtotal:C}", germanCulture);
+Console.WriteLine($"      Tax: {taxPercentage:P}");
+Console.WriteLine($"  Total Billed: {total:C}", germanCulture);
