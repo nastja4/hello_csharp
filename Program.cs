@@ -35,3 +35,10 @@ while (true)
     int length = closingPosition - openingPosition;
     Console.WriteLine(message.Substring(openingPosition, length));
 }
+
+/*
+What if
+different symbols
+open symbol
+matching closing symbol
+*/
