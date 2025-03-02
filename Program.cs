@@ -1,44 +1,38 @@
-﻿string message = "(What if) I have [different symbols] but every {open symbol} needs a [matching closing symbol]?";
+﻿const string input = "<div><h2>Widgets &trade;</h2><span>5000</span></div>";
 
-char[] openSymbols = ['[', '{', '('];
+string quantity = "";
+string output = "";
 
-// Keeps track of where the last matching closing symbol was found
-int closingPosition = 0;
+// Your work here
 
-// Looping through the string
-while (true)
-{
-    int openingPosition = message.IndexOfAny(openSymbols, closingPosition);
+// extract quantity
+string openSpan = "<span>";
+string closeSpan = "</span>";
 
-    if (openingPosition == -1) break;
+int quantityStart = input.IndexOf(openSpan) + openSpan.Length;
+int quantityEnd = input.IndexOf(closeSpan);
+int quantityLength = quantityEnd - quantityStart;
+quantity = input.Substring(quantityStart, quantityLength);
+quantity = $"Quantity: {quantity}";
 
-    // Determining the matching closing symbol
-    string currentSymbol = message.Substring(openingPosition, 1);
-    char matchingSymbol = ' ';
-    switch (currentSymbol)
-    {
-        case "[":
-            matchingSymbol = ']';
-            break;
-        case "{":
-            matchingSymbol = '}';
-            break;
-        case "(":
-            matchingSymbol = ')';
-            break;
-    }
+// replacing the trademark symbol with the registered trademark symbol, removing divs
+const string tradeSymbol = "&trade";
+const string regSymbol = "&reg";
+output = input.Replace(tradeSymbol, regSymbol);
 
-    // Finding the closing symbol & extracting the content
-    openingPosition += 1;  // Move to the start of the enclosed content
-    closingPosition = message.IndexOf(matchingSymbol, openingPosition);
+const string openDiv = "<div>";
+int openDivStart = output.IndexOf(openDiv);
+output = output.Remove(openDivStart, openDiv.Length);
 
-    int length = closingPosition - openingPosition;
-    Console.WriteLine(message.Substring(openingPosition, length));
-}
+const string closeDiv = "</div>";
+int closeDivStart = output.IndexOf(closeDiv);
+output = "Output: " + output.Remove(closeDivStart, closeDiv.Length);
+
+
+Console.WriteLine(quantity);
+Console.WriteLine(output);
 
 /*
-What if
-different symbols
-open symbol
-matching closing symbol
+Quantity: 5000
+Output: <h2>Widgets &reg;</h2><span>5000</span>
 */
