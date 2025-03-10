@@ -465,7 +465,9 @@ do
                             }
 
                             // #3a iterate submitted characteristic terms and search description for each term
-                            if (dogDescription.Contains(" " + term.Trim() + " "))
+                            if (dogDescription.Contains(" " + term.Trim() + " ") || 
+                                dogDescription.StartsWith(term.Trim() + " ") || 
+                                dogDescription.EndsWith(" " + term.Trim()))
                             {
                                 // #3b update message to reflect current search term match 
                                 Console.WriteLine($"\rOur dog {ourAnimals[i, 3]} matches your search for {term.Trim()}");
