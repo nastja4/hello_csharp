@@ -43,7 +43,7 @@ for (int i = 0; i < maxPets; i++)
             animalID = "d2";
             animalSpecies = "dog";            
             animalAge = "9";
-            animalNickname = "loki";
+            animalNickname = "gus";
             animalPhysicalDescription = "large reddish-brown male golden retriever weighing about 85 pounds. housebroken.";
             animalPersonalityDescription = "loves to have his ears rubbed when he greets you at the door, or at any time! loves to lean-in and give doggy hugs.";            
             suggestedDonation = "49,99";
@@ -52,7 +52,7 @@ for (int i = 0; i < maxPets; i++)
             animalID = "c3";
             animalSpecies = "cat";            
             animalAge = "1";
-            animalNickname = "Puss";
+            animalNickname = "snow";
             animalPhysicalDescription = "small white female weighing about 8 pounds. litter box trained.";
             animalPersonalityDescription = "friendly";            
             suggestedDonation = "40,00";
@@ -60,8 +60,8 @@ for (int i = 0; i < maxPets; i++)
         case 3:        
             animalID = "c4";
             animalSpecies = "cat";            
-            animalAge = "?";
-            animalNickname = "";
+            animalAge = "";
+            animalNickname = "lion";
             animalPhysicalDescription = "";
             animalPersonalityDescription = "";            
             suggestedDonation = "";
@@ -422,24 +422,21 @@ do
                     dogCharacteristics = readResult.ToLower().Trim();
                     Console.WriteLine();
                 }
-            }            
+            }
 
-            string[] dogSearches = dogCharacteristics.Split(",");
+            string[] dogSearches = dogCharacteristics.Split(",");  // dogSearches = ["friendly", "brown", "playful"];
             // trim leading and trailing spaces from each search term
             for (int i = 0; i < dogSearches.Length; i++)
             {
                 dogSearches[i] = dogSearches[i].Trim();
             }
-
             Array.Sort(dogSearches);
+
             // #4 update to "rotating" animation
             string[] searchingIcons = [" |", " /", "--", " \\", " *"]; 
-
-            //bool noMatchesDog = true;
+          
             bool matchesAnyDog = false;
             string dogDescription = "";  // declaratiom - to hold the combined data that originated from animalPhysicalDescription and animalPersonalityDescription
-
-            
 
             // loop through the ourAnimals array to search for matching animals
             for (int i = 0; i < maxPets; i++)
@@ -454,26 +451,17 @@ do
                     {
                         // only search if there is a term to search for 
                         if (term != null && term.Trim() != "")
-                        {
-                            /*
-                            ourAnimals[i, 0] = "ID #: " + animalID;
-                            ourAnimals[i, 1] = "Species: " + animalSpecies;
-                            ourAnimals[i, 2] = "Age: " + animalAge;
-                            ourAnimals[i, 3] = "Nickname: " + animalNickname;
-                            ourAnimals[i, 4] = "Physical description: " + animalPhysicalDescription;
-                            ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
-                            ourAnimals[i, 6] = "Suggested Donations: " + suggestedDonation;
-                            */
+                        {                            
+                            // j is a countdown timer that starts from 2 and counts down to 0.
                             for (int j = 2; j > -1; j--)
                             {
                                 // #5 update "searching" message to show countdown
                                 foreach (string icon in searchingIcons)
                                 {
-                                    Console.Write($"\rsearching our dog {ourAnimals[i, 3]} for {term.Trim()} {icon} {j.ToString()}");
+                                    Console.Write($"\rsearching our dog {ourAnimals[i, 3]} for {term.Trim()} {icon} {j}");
                                     Thread.Sleep(100);
                                 }
-
-                                Console.Write($"\r{new String(' ', Console.BufferWidth)}");
+                                Console.Write($"\r{new string(' ', Console.BufferWidth)}");
                             }
 
                             // #3a iterate submitted characteristic terms and search description for each term
@@ -481,7 +469,6 @@ do
                             {
                                 // #3b update message to reflect current search term match 
                                 Console.WriteLine($"\rOur dog {ourAnimals[i, 3]} matches your search for {term.Trim()}");
-
                                 matchesCurrentDog = true;
                                 matchesAnyDog = true;
                             }
