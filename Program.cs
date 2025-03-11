@@ -1,132 +1,75 @@
-﻿using System;
+﻿/*
+if IPv4 address consists of four numbers separated by dots
+and
+if Each number must not contain leading zeroes
+and
+if Each number must range from 0 to 255
 
-int[] times = [800, 1200, 1600, 2000];
-int diff = 0;
+then IPv4 address is valid
 
-Console.WriteLine("Enter current GMT");  // e.g., 5 for GMT+5, -3 for GMT-3
-int currentGMT = Convert.ToInt32(Console.ReadLine());
+else IPv4 address isnt valid
+*/
 
-Console.WriteLine("Current Medicine Schedule:");
-DisplayTimes();
-// foreach (int val in times)
-// {
-//     string time = val.ToString();
-//     int len = time.Length;
+string[] ipv4Input = ["107.31.1.5", "255.0.0.255", "555..0.555", "255...255"];
+string[] address;  // Prevents empty substrings from being included in the resulting array ("192..168.1.1").
+bool validLength = false;
+bool validZeroes = false;
+bool validRange = false;
 
-//     if (len >= 3)
-//     {
-//         time = time.Insert(len - 2, ":");
-//     }
-//     else if (len == 2)
-//     {
-//         time = time.Insert(0, "0:");
-//     }
-//     else
-//     {
-//         time = time.Insert(0, "0:0");
-//     }
-
-//     Console.Write($"{time} ");
-// }
-
-// Console.WriteLine();
-
-Console.WriteLine("Enter new GMT");
-int newGMT = Convert.ToInt32(Console.ReadLine());
-
-if (Math.Abs(newGMT) > 12 || Math.Abs(currentGMT) > 12)
+foreach (string ip in ipv4Input)
 {
-    Console.WriteLine("Invalid GMT");
+    address = ip.Split(".", StringSplitOptions.RemoveEmptyEntries);
+
+    ValidateLength();
+    ValidateZeroes();
+    ValidateRange();
+
+    if (validLength && validZeroes && validRange)
+    {
+        Console.WriteLine($"{ip} is a valid IPv4 address");
+    }
+    else
+    {
+        Console.WriteLine($"{ip} is an invalid IPv4 address");
+    }
 }
-else if (newGMT <= 0 && currentGMT <= 0 || newGMT >= 0 && currentGMT >= 0)
-{
-    diff = 100 * (Math.Abs(newGMT) - Math.Abs(currentGMT));
-    AdjustTimes();
-    // for (int i = 0; i < times.Length; i++)
-    // {
-    //     times[i] = (times[i] + diff) % 2400;
-    // }
-}
-else
-{
-    diff = 100 * (Math.Abs(newGMT) + Math.Abs(currentGMT));
-    AdjustTimes();
-    // for (int i = 0; i < times.Length; i++)
-    // {
-    //     times[i] = (times[i] + diff) % 2400;
-    // }
-}
-
-Console.WriteLine("New Medicine Schedule:");
-DisplayTimes();
-// foreach (int val in times)
-// {
-//     string time = val.ToString();
-//     int len = time.Length;
-
-//     if (len >= 3)
-//     {
-//         time = time.Insert(len - 2, ":");
-//     }
-//     else if (len == 2)
-//     {
-//         time = time.Insert(0, "0:");
-//     }
-//     else 
-//     {
-//         time = time.Insert(0, "0:0");
-//     }
-
-//     Console.Write($"{time} ");
-// }
-
-// Console.WriteLine();
-
 
 // Methods
-void DisplayTimes()
-{
-    /* Format and display medicine times */
-    foreach (int val in times)
-    {
-        string time = val.ToString();
-        int len = time.Length;
-
-        if (len >= 3)
-        {
-            time = time.Insert(len - 2, ":");
-        }
-        else if (len == 2)
-        {
-            time = time.Insert(0, "0:");
-        }
-        else 
-        {
-            time = time.Insert(0, "0:0");
-        }
-
-        Console.Write($"{time} ");
-    }
-    Console.WriteLine();
+void ValidateLength() 
+{    
+    validLength = address.Length == 4;
 }
 
-void AdjustTimes()
+void ValidateZeroes() 
 {
-    /* Adjust the times by adding the difference, keeping the value within 24 hours */
-    for (int i = 0; i < times.Length; i++)
+    foreach (string number in address)
     {
-        times[i] = (times[i] + diff) % 2400;
+        if (number.Length > 1 && number.StartsWith("0"))
+        {
+            validZeroes = false;
+            return;  // The return statement terminates execution of the method and returns control to the method caller
+        }
     }
+    validZeroes = true;
+}
+
+void ValidateRange() 
+{
+    foreach (string number in address)
+    {
+        int value = int.Parse(number);
+        if (value < 0 || value > 255)
+        {
+            validRange = false;
+            return;
+        }
+    }
+    validRange = true;
 }
 
 /*
-Enter current GMT
--6
-Current Medicine Schedule:
-8:00 12:00 16:00 20:00 
-Enter new GMT
-+6
-New Medicine Schedule:
-20:00 0:00 4:00 8:00 
-PS C:\Users\fazius\GitHub_projects\helloworld> 
+107.31.1.5 is a valid IPv4 address
+255.0.0.255 is a valid IPv4 address
+555..0.555 is an invalid IPv4 address
+255...255 is an invalid IPv4 address
 */
