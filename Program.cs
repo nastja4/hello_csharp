@@ -1,20 +1,33 @@
-﻿Random random = new();
-int luck = random.Next(100);
+﻿int[] schedule = [800, 1200, 1600, 2000];
 
-string[] text = ["You have much to", "Today is a day to", "Whatever work you do", "This is an ideal time to"];
-string[] good = ["look forward to.", "try new things!", "is likely to succeed.", "accomplish your dreams!"];
-string[] bad = ["fear.", "avoid major decisions.", "may have unexpected outcomes.", "re-evaluate your life."];
-string[] neutral = ["appreciate.", "enjoy time with friends.", "should align with your values.", "get in tune with nature."];
+DisplayAdjustedTimes(schedule, 6, -6);
 
-TellFortune();
-
-void TellFortune()
+void DisplayAdjustedTimes(int[] times, int currentGMT, int newGMT)
 {
-    Console.WriteLine("A fortune teller whispers the following words:");
-
-    string[] fortune = luck > 75 ? good : (luck < 25 ? bad : neutral);  // uses good, bad or neutral array
-    for (int i = 0; i < 4; i++) 
+    int diff = 0;
+    if (Math.Abs(newGMT) > 12 || Math.Abs(currentGMT) > 12)
     {
-        Console.Write($"{text[i]} {fortune[i]} ");
+        Console.WriteLine("Invalid GMT");
+    }
+    else if (newGMT <= 0 && currentGMT <= 0 || newGMT >= 0 && currentGMT >= 0)
+    {
+        diff = 100 * (Math.Abs(newGMT) - Math.Abs(currentGMT));
+    }
+    else
+    {
+        diff = 100 * (Math.Abs(newGMT) + Math.Abs(currentGMT));
+    }
+
+    for (int i = 0; i < times.Length; i++)
+    {
+        int newTime = (times[i] + diff) % 2400;  // int newTime = (-300) % 2400;  // Result: 2100
+        Console.WriteLine($"{times[i]} -> {newTime}");
     }
 }
+
+/*
+800 -> 2000
+1200 -> 0
+1600 -> 400
+2000 -> 800
+*/
