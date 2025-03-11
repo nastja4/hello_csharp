@@ -1,75 +1,20 @@
-﻿/*
-if IPv4 address consists of four numbers separated by dots
-and
-if Each number must not contain leading zeroes
-and
-if Each number must range from 0 to 255
+﻿Random random = new();
+int luck = random.Next(100);
 
-then IPv4 address is valid
+string[] text = ["You have much to", "Today is a day to", "Whatever work you do", "This is an ideal time to"];
+string[] good = ["look forward to.", "try new things!", "is likely to succeed.", "accomplish your dreams!"];
+string[] bad = ["fear.", "avoid major decisions.", "may have unexpected outcomes.", "re-evaluate your life."];
+string[] neutral = ["appreciate.", "enjoy time with friends.", "should align with your values.", "get in tune with nature."];
 
-else IPv4 address isnt valid
-*/
+TellFortune();
 
-string[] ipv4Input = ["107.31.1.5", "255.0.0.255", "555..0.555", "255...255"];
-string[] address;  // Prevents empty substrings from being included in the resulting array ("192..168.1.1").
-bool validLength = false;
-bool validZeroes = false;
-bool validRange = false;
-
-foreach (string ip in ipv4Input)
+void TellFortune()
 {
-    address = ip.Split(".", StringSplitOptions.RemoveEmptyEntries);
+    Console.WriteLine("A fortune teller whispers the following words:");
 
-    ValidateLength();
-    ValidateZeroes();
-    ValidateRange();
-
-    if (validLength && validZeroes && validRange)
+    string[] fortune = luck > 75 ? good : (luck < 25 ? bad : neutral);  // uses good, bad or neutral array
+    for (int i = 0; i < 4; i++) 
     {
-        Console.WriteLine($"{ip} is a valid IPv4 address");
-    }
-    else
-    {
-        Console.WriteLine($"{ip} is an invalid IPv4 address");
+        Console.Write($"{text[i]} {fortune[i]} ");
     }
 }
-
-// Methods
-void ValidateLength() 
-{    
-    validLength = address.Length == 4;
-}
-
-void ValidateZeroes() 
-{
-    foreach (string number in address)
-    {
-        if (number.Length > 1 && number.StartsWith("0"))
-        {
-            validZeroes = false;
-            return;  // The return statement terminates execution of the method and returns control to the method caller
-        }
-    }
-    validZeroes = true;
-}
-
-void ValidateRange() 
-{
-    foreach (string number in address)
-    {
-        int value = int.Parse(number);
-        if (value < 0 || value > 255)
-        {
-            validRange = false;
-            return;
-        }
-    }
-    validRange = true;
-}
-
-/*
-107.31.1.5 is a valid IPv4 address
-255.0.0.255 is a valid IPv4 address
-555..0.555 is an invalid IPv4 address
-255...255 is an invalid IPv4 address
-*/
