@@ -1,28 +1,30 @@
-﻿using System.Text;
-// Set console encoding to UTF-8
-Console.OutputEncoding = Encoding.UTF8;
+﻿string input = "The school is closed";
+Console.WriteLine(input);
+Console.WriteLine(ReverseSentence(input));
 
-double usd = 23.73;
-int vnd = UsdToVnd(usd);
-
-Console.WriteLine($"${usd} USD = ₫{vnd} VND");
-Console.WriteLine($"₫{vnd} VND = ${VndToUsd(vnd)} USD");
-
-// Method returns an integer
-int UsdToVnd(double usd)
+string ReverseSentence(string input)
 {
-    int rate = 23500;
-    return (int) (rate * usd);
+    string result = "";
+    string[] words = input.Split(" ");
+    foreach (string word in words)
+    {
+        result += ReverseWord(word) + " ";
+    }
+    return result.Trim();
 }
 
-// Method returns a double
-double VndToUsd(int vnd)
+string ReverseWord(string word)
 {
-    double rate = 23500;
-    return vnd / rate;
+    string result = "";
+    for (int i = word.Length - 1; i >= 0; i--)
+    {
+        
+        result += word[i];
+    }
+    return result;
 }
 
 /*
-$23,73 USD = ₫557655 VND
-₫557655 VND = $23,73 USD
+The school is closed
+ehT loohcs si desolc
 */
