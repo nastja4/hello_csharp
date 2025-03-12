@@ -1,67 +1,65 @@
-﻿// Test pass by value
-int a = 3;
-int b = 4;
-int c = 0;
+﻿string[] guestList = ["Rebecca", "Nadia", "Noor", "Jonte"];
+string[] rsvp = new string[10];
+int count = 0;
 
-Multiply(a, b, c);
-Console.WriteLine($"global statement: {a} x {b} = {c}");
-
-void Multiply(int a, int b, int c)
+//void RSVP(string name, int partySize, string allergies, bool inviteOnly)
+void RSVP(string name, int partySize = 1, string allergies = "none", bool inviteOnly = true)  // Declare optional parameters
 {
-    c = a * b;
-    Console.WriteLine($"inside Multiply method: {a} x {b} = {c}");
-}
-Console.WriteLine();
-
-
-// Test pass by reference
-int[] array = [1,2,3,4,5];
-
-PrintArray(array);
-Clear(array);
-PrintArray(array);
-
-void PrintArray(int[] array)
-{
-    foreach (int a in array)
+    if (inviteOnly)
     {
-        Console.Write($"{a} ");
+        // search guestList before adding rsvp
+        bool found = false;
+        foreach (string guest in guestList)
+        {
+            if (guest.Equals(name))
+            {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            Console.WriteLine($"Sorry, {name} is not on the guest list");
+            return;  // Prevent adding uninvited guests
+        }
     }
-    Console.WriteLine();
+
+    rsvp[count] = $"Name: {name}, \tParty Size: {partySize}, \tAllergies: {allergies}";
+    count++;
 }
 
-void Clear(int[] array)
+void ShowRSVPs()
 {
-    for (int i = 0; i < array.Length; i++)
+    Console.WriteLine("\nTotal RSVPs:");
+    for (int i = 0; i < count; i++)
     {
-        array[i] = 0;
+        Console.WriteLine(rsvp[i]);
     }
 }
-Console.WriteLine();
 
 
-// Test with strings
-string status = "Healthy";
+// RSVP("Rebecca", 1, "none", true);
+// RSVP("Nadia", 2, "Nuts", true);
+// RSVP(name: "Linh", partySize: 2, allergies: "none", inviteOnly: false);  // "Linh" had inviteOnly = false, so he skipped the guest list check entirely and got added.
+// RSVP("Tony", inviteOnly: true, allergies: "Jackfruit", partySize: 1);
+// RSVP("Noor", 4, "none", false);
+// RSVP("Jonte", 2, "Stone fruit", false);
 
-Console.WriteLine($"Start: {status}");
-SetHealth(status, false);
-Console.WriteLine($"End: {status}");
-
-void SetHealth(string status, bool isHealthy)
-{
-    status = (isHealthy ? "Healthy" : "Unhealthy");
-    Console.WriteLine($"Middle: {status}");
-}
-
+RSVP("Rebecca");
+RSVP("Nadia", 2, "Nuts");
+RSVP(name: "Linh", partySize: 2, inviteOnly: false);  // Use named arguments
+RSVP("Tony", allergies: "Jackfruit", inviteOnly: true);
+RSVP("Noor", 4, inviteOnly: false);
+RSVP("Jonte", 2, "Stone fruit", false);
+ShowRSVPs();
 
 /*
-inside Multiply method: 3 x 4 = 12
-global statement: 3 x 4 = 0
+Sorry, Tony is not on the guest list
 
-1 2 3 4 5
-0 0 0 0 0
-
-Start: Healthy
-Middle: Unhealthy
-End: Healthy
+Total RSVPs:
+Name: Rebecca,  Party Size: 1,  Allergies: none
+Name: Nadia,    Party Size: 2,  Allergies: Nuts
+Name: Linh,     Party Size: 2,  Allergies: none
+Name: Noor,     Party Size: 4,  Allergies: none
+Name: Jonte,    Party Size: 2,  Allergies: Stone fruit
 */
