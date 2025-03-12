@@ -1,65 +1,51 @@
-﻿string[] guestList = ["Rebecca", "Nadia", "Noor", "Jonte"];
-string[] rsvp = new string[10];
-int count = 0;
+﻿/*
+An employee's email address consists of their username - the first two characters of the employee first name - and company domain name ("Robert Bavin" would have the username "robavin"). 
+The domain for internal employees is "contoso.com".
+*/
 
-//void RSVP(string name, int partySize, string allergies, bool inviteOnly)
-void RSVP(string name, int partySize = 1, string allergies = "none", bool inviteOnly = true)  // Declare optional parameters
+string[,] corporate = 
 {
-    if (inviteOnly)
-    {
-        // search guestList before adding rsvp
-        bool found = false;
-        foreach (string guest in guestList)
-        {
-            if (guest.Equals(name))
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            Console.WriteLine($"Sorry, {name} is not on the guest list");
-            return;  // Prevent adding uninvited guests
-        }
-    }
+    {"Robert", "Bavin"}, {"Simon", "Bright"},
+    {"Kim", "Sinclair"}, {"Aashrita", "Kamath"},
+    {"Sarah", "Delucchi"}, {"Sinan", "Ali"}
+};
 
-    rsvp[count] = $"Name: {name}, \tParty Size: {partySize}, \tAllergies: {allergies}";
-    count++;
+string[,] external = 
+{
+    {"Vinnie", "Ashton"}, {"Cody", "Dysart"},
+    {"Shay", "Lawrence"}, {"Daren", "Valdes"}
+};
+
+string externalDomain = "hayworth.com";
+
+for (int i = 0; i < corporate.GetLength(0); i++) 
+{
+    // display internal email addresses
+    DisplayEmail(first: corporate[i,0], last: corporate[i,1]);
 }
 
-void ShowRSVPs()
+for (int i = 0; i < external.GetLength(0); i++) 
 {
-    Console.WriteLine("\nTotal RSVPs:");
-    for (int i = 0; i < count; i++)
-    {
-        Console.WriteLine(rsvp[i]);
-    }
+    // display external email addresses
+    DisplayEmail(first: external[i,0], last: external[i,1], domain: externalDomain);
 }
 
-
-// RSVP("Rebecca", 1, "none", true);
-// RSVP("Nadia", 2, "Nuts", true);
-// RSVP(name: "Linh", partySize: 2, allergies: "none", inviteOnly: false);  // "Linh" had inviteOnly = false, so he skipped the guest list check entirely and got added.
-// RSVP("Tony", inviteOnly: true, allergies: "Jackfruit", partySize: 1);
-// RSVP("Noor", 4, "none", false);
-// RSVP("Jonte", 2, "Stone fruit", false);
-
-RSVP("Rebecca");
-RSVP("Nadia", 2, "Nuts");
-RSVP(name: "Linh", partySize: 2, inviteOnly: false);  // Use named arguments
-RSVP("Tony", allergies: "Jackfruit", inviteOnly: true);
-RSVP("Noor", 4, inviteOnly: false);
-RSVP("Jonte", 2, "Stone fruit", false);
-ShowRSVPs();
+void DisplayEmail(string first, string last, string domain = "contoso.com")
+{
+    string email = first.Substring(0,2) + last;
+    email = email.ToLower();
+    Console.WriteLine($"{email}@{domain}");
+}
 
 /*
-Sorry, Tony is not on the guest list
-
-Total RSVPs:
-Name: Rebecca,  Party Size: 1,  Allergies: none
-Name: Nadia,    Party Size: 2,  Allergies: Nuts
-Name: Linh,     Party Size: 2,  Allergies: none
-Name: Noor,     Party Size: 4,  Allergies: none
-Name: Jonte,    Party Size: 2,  Allergies: Stone fruit
+robavin@contoso.com
+sibright@contoso.com
+kisinclair@contoso.com
+aakamath@contoso.com
+sadelucchi@contoso.com
+siali@contoso.com
+viashton@hayworth.com
+codysart@hayworth.com
+shlawrence@hayworth.com
+davaldes@hayworth.com
 */
