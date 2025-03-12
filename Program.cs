@@ -1,37 +1,28 @@
-﻿double total = 0;
-double minimumSpend = 30.00;
+﻿using System.Text;
+// Set console encoding to UTF-8
+Console.OutputEncoding = Encoding.UTF8;
 
-double[] items = {15.97, 3.50, 12.25, 22.99, 10.98};
-double[] discounts = {0.30, 0.00, 0.10, 0.20, 0.50};
+double usd = 23.73;
+int vnd = UsdToVnd(usd);
 
-for (int i = 0; i < items.Length; i++)
+Console.WriteLine($"${usd} USD = ₫{vnd} VND");
+Console.WriteLine($"₫{vnd} VND = ${VndToUsd(vnd)} USD");
+
+// Method returns an integer
+int UsdToVnd(double usd)
 {
-    total += GetDiscountedPrice(i);
+    int rate = 23500;
+    return (int) (rate * usd);
 }
 
-total -= TotalMeetsMinimum() ? 5.00 : 0.00;
-
-Console.WriteLine($"Total: ${FormatDecimal(total)}");
-
-
-double GetDiscountedPrice(int itemIndex)
+// Method returns a double
+double VndToUsd(int vnd)
 {
-    // Calculate the discounted price of the item
-    return items[itemIndex] * (1 - discounts[itemIndex]);
-}
-
-bool TotalMeetsMinimum()
-{
-    // Check if the total meets the minimum
-    return total >= minimumSpend;
-}
-
-string FormatDecimal(double input)
-{
-    // Format the double so only 2 decimal places are displayed
-    return input.ToString("0.00");
+    double rate = 23500;
+    return vnd / rate;
 }
 
 /*
-Total: $44,59
+$23,73 USD = ₫557655 VND
+₫557655 VND = $23,73 USD
 */
