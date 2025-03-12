@@ -1,51 +1,37 @@
-﻿/*
-An employee's email address consists of their username - the first two characters of the employee first name - and company domain name ("Robert Bavin" would have the username "robavin"). 
-The domain for internal employees is "contoso.com".
-*/
+﻿double total = 0;
+double minimumSpend = 30.00;
 
-string[,] corporate = 
+double[] items = {15.97, 3.50, 12.25, 22.99, 10.98};
+double[] discounts = {0.30, 0.00, 0.10, 0.20, 0.50};
+
+for (int i = 0; i < items.Length; i++)
 {
-    {"Robert", "Bavin"}, {"Simon", "Bright"},
-    {"Kim", "Sinclair"}, {"Aashrita", "Kamath"},
-    {"Sarah", "Delucchi"}, {"Sinan", "Ali"}
-};
-
-string[,] external = 
-{
-    {"Vinnie", "Ashton"}, {"Cody", "Dysart"},
-    {"Shay", "Lawrence"}, {"Daren", "Valdes"}
-};
-
-string externalDomain = "hayworth.com";
-
-for (int i = 0; i < corporate.GetLength(0); i++) 
-{
-    // display internal email addresses
-    DisplayEmail(first: corporate[i,0], last: corporate[i,1]);
+    total += GetDiscountedPrice(i);
 }
 
-for (int i = 0; i < external.GetLength(0); i++) 
+total -= TotalMeetsMinimum() ? 5.00 : 0.00;
+
+Console.WriteLine($"Total: ${FormatDecimal(total)}");
+
+
+double GetDiscountedPrice(int itemIndex)
 {
-    // display external email addresses
-    DisplayEmail(first: external[i,0], last: external[i,1], domain: externalDomain);
+    // Calculate the discounted price of the item
+    return items[itemIndex] * (1 - discounts[itemIndex]);
 }
 
-void DisplayEmail(string first, string last, string domain = "contoso.com")
+bool TotalMeetsMinimum()
 {
-    string email = first.Substring(0,2) + last;
-    email = email.ToLower();
-    Console.WriteLine($"{email}@{domain}");
+    // Check if the total meets the minimum
+    return total >= minimumSpend;
+}
+
+string FormatDecimal(double input)
+{
+    // Format the double so only 2 decimal places are displayed
+    return input.ToString("0.00");
 }
 
 /*
-robavin@contoso.com
-sibright@contoso.com
-kisinclair@contoso.com
-aakamath@contoso.com
-sadelucchi@contoso.com
-siali@contoso.com
-viashton@hayworth.com
-codysart@hayworth.com
-shlawrence@hayworth.com
-davaldes@hayworth.com
+Total: $44,59
 */
