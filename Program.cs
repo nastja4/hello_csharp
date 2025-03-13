@@ -1,56 +1,62 @@
-﻿// Task - to find more pairs of coins whose sum is equal to the target value.
+﻿Random random = new();
 
-int target = 30;
-int[] coins = [5, 5, 50, 25, 25, 10, 5];
-int[,] result = TwoCoins(coins, target);
-
-if (result.Length == 0)
+Console.WriteLine("Would you like to play? (Y/N)");
+if (ShouldPlay()) 
 {
-    Console.WriteLine("No two coins make change");
+    PlayGame();
 }
-else
+
+// method should retrieve user input (Y/N) and determine if the user wants to play again
+bool ShouldPlay() => Console.ReadLine().Trim().Equals("y", StringComparison.OrdinalIgnoreCase);
+
+void PlayGame() 
 {
-    Console.WriteLine("Change found at positions:");
-    for (int i = 0; i < result.GetLength(0); i++)
+    var play = true;
+
+    while (play) 
     {
-        if (result[i,0] == -1)  // Stops printing when -1 is found
-        {
-            break;
-        }        
-        Console.WriteLine($"{result[i,0]}, {result[i,1]}");
+        var target = GetTarget();
+        var roll = RollDice();
+
+        Console.WriteLine($"Roll a number greater than {target} to win!");
+        Console.WriteLine($"You rolled a {roll}");
+        Console.WriteLine(WinOrLose(roll, target));
+        Console.WriteLine("\nPlay again? (Y/N)");
+
+        play = ShouldPlay();
     }
 }
 
-// Method
-int[,] TwoCoins(int[] coins, int target)
+// Create methods that set target and roll to random values in the correct range
+int GetTarget()
 {
-    int[,] result = {{-1,-1},{-1,-1},{-1,-1},{-1,-1},{-1,-1}};   // Storage for up to 5 pairs (indicating empty slots).
-    int count = 0;  // Tracks how many pairs have been found
+    return random.Next(1, 6);
+}
 
-    for (int curr = 0; curr < coins.Length; curr++)
+int RollDice()
+{
+    return random.Next(1, 7);
+}
+
+
+// method should determine if the player has won or lost
+string WinOrLose(int roll, int target)
+{
+    if (roll > target)
     {
-        for (int next = curr + 1; next < coins.Length; next++)
-        {
-            if (coins[curr] + coins[next] == target)
-            {
-                result[count, 0] = curr;  // Store first index
-                result[count, 1] = next;  // Store second index
-                count++;
-            }
-            if (count == result.GetLength(0))  // dimension for 2D arrays = 0 → Returns the number of rows (outer array size). (1 - the number of columns)
-            {
-                return result;
-            }
-        }
+        return "You win!";
     }
-    return (count == 0) ? new int[0,0] : result;
+    return "You lose :(";
 }
 
 /*
-Change found at positions:
-0, 3
-0, 4
-1, 3
-1, 4
-3, 6
+Would you like to play? (Y/N)
+y
+Roll a number greater than 3 to win!
+You rolled a 2
+You lose :(
+
+Play again? (Y/N)
+
 */
+
