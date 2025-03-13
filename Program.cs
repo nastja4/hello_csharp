@@ -1,30 +1,33 @@
-﻿string input = "The school is closed";
-Console.WriteLine(input);
-Console.WriteLine(ReverseSentence(input));
+﻿string[] words = ["racecar" ,"talented", "deified", "tent", "tenet"];
 
-string ReverseSentence(string input)
+Console.WriteLine("Is it a palidrome?");
+foreach (string word in words)
 {
-    string result = "";
-    string[] words = input.Split(" ");
-    foreach (string word in words)
-    {
-        result += ReverseWord(word) + " ";
-    }
-    return result.Trim();
+    Console.WriteLine($"{word}: {IsPalindrome(word)}");
 }
 
-string ReverseWord(string word)
+bool IsPalindrome(string word)
 {
-    string result = "";
-    for (int i = word.Length - 1; i >= 0; i--)
+    int start = 0;
+    int end = word.Length - 1;
+
+    while (start < end)
     {
-        
-        result += word[i];
+        if (word[start] != word[end])
+        {
+            return false;
+        }
+        start++;
+        end--;
     }
-    return result;
+    return true;
 }
 
 /*
-The school is closed
-ehT loohcs si desolc
+Is it a palidrome?
+racecar: True
+talented: False
+deified: True
+tent: False
+tenet: True
 */
