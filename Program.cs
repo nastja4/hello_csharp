@@ -1,62 +1,90 @@
-﻿Random random = new();
+﻿/*
+- There will be three visiting schools
+    - School A has six visiting groups (the default number)
+    - School B has three visiting groups
+    - School C has two visiting groups
 
-Console.WriteLine("Would you like to play? (Y/N)");
-if (ShouldPlay()) 
+- For each visiting school, perform the following tasks
+    - Randomize the animals
+    - Assign the animals to the correct number of groups
+    - Print the school name
+    - Print the animal groups
+*/
+
+using System;
+
+string[] pettingZoo = 
+[
+    "alpacas", "capybaras", "chickens", "ducks", "emus", "geese", 
+    "goats", "iguanas", "kangaroos", "lemurs", "llamas", "macaws", 
+    "ostriches", "pigs", "ponies", "rabbits", "sheep", "tortoises",
+];
+
+PlanSchoolVisit("School A");
+PlanSchoolVisit("School B", 3);
+PlanSchoolVisit("School C", 2);
+
+void PlanSchoolVisit(string schoolName, int groups = 6)
 {
-    PlayGame();
+    RandomizeAnimals();
+    string[,] group1 = AssignGroups(groups);
+    Console.WriteLine(schoolName);
+    PrintGroup(group1);
 }
 
-// method should retrieve user input (Y/N) and determine if the user wants to play again
-bool ShouldPlay() => Console.ReadLine().Trim().Equals("y", StringComparison.OrdinalIgnoreCase);
-
-void PlayGame() 
+void RandomizeAnimals()
 {
-    var play = true;
+    // cycle through each element in the array, select a random index, and swap it with the current element.
+    Random random = new();
 
-    while (play) 
+    for (int i = 0; i < pettingZoo.Length; i++)
     {
-        var target = GetTarget();
-        var roll = RollDice();
-
-        Console.WriteLine($"Roll a number greater than {target} to win!");
-        Console.WriteLine($"You rolled a {roll}");
-        Console.WriteLine(WinOrLose(roll, target));
-        Console.WriteLine("\nPlay again? (Y/N)");
-
-        play = ShouldPlay();
-    }
+        int r = random.Next(i, pettingZoo.Length);
+        (pettingZoo[r], pettingZoo[i]) = (pettingZoo[i], pettingZoo[r]);  // Using Tuple Swap 
+    }    
 }
 
-// Create methods that set target and roll to random values in the correct range
-int GetTarget()
+string[,] AssignGroups(int groups = 6)
 {
-    return random.Next(1, 6);
-}
+    string[,] result = new string[groups, pettingZoo.Length / groups];
+    int start = 0;
 
-int RollDice()
-{
-    return random.Next(1, 7);
-}
-
-
-// method should determine if the player has won or lost
-string WinOrLose(int roll, int target)
-{
-    if (roll > target)
+    for (int i = 0; i < groups; i++)  // Iterates over each group (rows)
     {
-        return "You win!";
+        for (int j = 0; j < result.GetLength(1); j++)  // Assigns animals to each group (columns).
+        {
+            result[i,j] = pettingZoo[start++];  // start++: Moves through the pettingZoo and assign animals sequentially to animal slot in group.
+        }
     }
-    return "You lose :(";
+    return result;
+}
+
+void PrintGroup(string[,] groups)
+{
+    for (int i = 0; i < groups.GetLength(0); i++)
+    {
+        Console.Write($"Group {i + 1}: ");
+        for (int j = 0; j < groups.GetLength(1); j++)
+        {
+            Console.Write($"{groups[i,j]} ");
+        }
+        Console.WriteLine();
+    }
 }
 
 /*
-Would you like to play? (Y/N)
-y
-Roll a number greater than 3 to win!
-You rolled a 2
-You lose :(
-
-Play again? (Y/N)
-
+School A
+Group 1: capybaras llamas pigs 
+Group 2: ostriches macaws sheep
+Group 3: chickens lemurs tortoises
+Group 4: iguanas alpacas geese
+Group 5: ducks goats kangaroos
+Group 6: ponies emus rabbits
+School B
+Group 1: kangaroos ostriches pigs alpacas geese chickens
+Group 2: ponies tortoises macaws rabbits llamas iguanas
+Group 3: capybaras emus goats sheep lemurs ducks
+School C
+Group 1: goats macaws chickens geese pigs capybaras sheep llamas ostriches
+Group 2: alpacas iguanas rabbits kangaroos lemurs emus ducks ponies tortoises
 */
-
