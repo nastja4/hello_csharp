@@ -1,33 +1,34 @@
-﻿string[] words = ["racecar" ,"talented", "deified", "tent", "tenet"];
+﻿// // Task - to find two coins whose sum is equal to a target value.
 
-Console.WriteLine("Is it a palidrome?");
-foreach (string word in words)
+int[] TwoCoins(int[] coins, int target)
 {
-    Console.WriteLine($"{word}: {IsPalindrome(word)}");
+    for (int curr = 0; curr < coins.Length; curr++)
+    {
+        for (int next = curr + 1; next < coins.Length; next++)
+        {
+            if (coins[curr] + coins[next] == target)
+            {
+                return [curr, next];  // Return an array with the two indices
+            }
+        }
+    }
+    return [];  // Return an empty array if no solution is found
 }
 
-bool IsPalindrome(string word)
-{
-    int start = 0;
-    int end = word.Length - 1;
+// Usage
+int target = 60;
+int[] coins = [5, 5, 50, 25, 25, 10, 5];
+int[] result = TwoCoins(coins, target);
 
-    while (start < end)
-    {
-        if (word[start] != word[end])
-        {
-            return false;
-        }
-        start++;
-        end--;
-    }
-    return true;
+if (result.Length == 0)
+{
+    Console.WriteLine("No two coins make change");
+}
+else
+{
+    Console.WriteLine($"Change found at positions {result[0]} and {result[1]}");
 }
 
 /*
-Is it a palidrome?
-racecar: True
-talented: False
-deified: True
-tent: False
-tenet: True
+Change found at positions 2 and 5
 */
