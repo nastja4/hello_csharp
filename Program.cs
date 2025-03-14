@@ -27,7 +27,7 @@ PlanSchoolVisit("School C", 2);
 void PlanSchoolVisit(string schoolName, int groups = 6)
 {
     RandomizeAnimals();
-    string[,] group1 = AssignGroups(groups);
+    string[,] group1 = AssignGroup(groups);
     Console.WriteLine(schoolName);
     PrintGroup(group1);
 }
@@ -44,19 +44,19 @@ void RandomizeAnimals()
     }    
 }
 
-string[,] AssignGroups(int groups = 6)
+string[,] AssignGroup(int groups = 6)
 {
     string[,] result = new string[groups, pettingZoo.Length / groups];
     int start = 0;
 
     for (int i = 0; i < groups; i++)  // Iterates over each group (rows)
     {
-        for (int j = 0; j < result.GetLength(1); j++)  // Assigns animals to each group (columns).
-        {
+        for (int j = 0; j < result.GetLength(1); j++)  // Loop through animals in the group (columns)
+        { 
             result[i,j] = pettingZoo[start++];  // start++: Moves through the pettingZoo and assign animals sequentially to animal slot in group.
         }
     }
-    return result;
+    return result;    
 }
 
 void PrintGroup(string[,] groups)
