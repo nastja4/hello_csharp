@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 
 Random random = new();
 Console.CursorVisible = false;
@@ -37,19 +38,20 @@ while (!shouldExit)
     {
         if (PlayerIsFaster())
         {
-            Move(3, false);
+            Move(1, false);  // Increased speed for fast player
         }
         else if (PlayerIsSick())
         {
             FreezePlayer();
-        } else 
+        } 
+        else 
         {
-            Move(nondirectionalKeysExit: false);
+            Move(exitOnInvalidKey: false);
         }
         if (GotFood())
-        {
-            ChangePlayer();
-            ShowFood();
+        {             
+            ChangePlayer();      
+            ShowFood();           
         }
     }   
 }
@@ -96,7 +98,7 @@ bool PlayerIsFaster()
 // Changes the player to match the food consumed
 void ChangePlayer() 
 {
-    player = states[food];
+    player = states[food];  // Change player appearance based on food
     Console.SetCursorPosition(playerX, playerY);
     Console.Write(player);
 }
@@ -109,7 +111,7 @@ void FreezePlayer()
 }
 
 // Reads directional input from the Console and moves the player
-void Move(int speed = 3, bool nondirectionalKeysExit = false) 
+void Move(int speed = 1, bool exitOnInvalidKey = false) 
 {
     int lastX = playerX;
     int lastY = playerY;
@@ -133,7 +135,7 @@ void Move(int speed = 3, bool nondirectionalKeysExit = false)
             break;
         default:
             // Exit if any other keys are pressed
-            shouldExit = nondirectionalKeysExit;               
+            shouldExit = exitOnInvalidKey;               
             break;
     }
 
@@ -161,3 +163,16 @@ void InitializeGame()
     Console.SetCursorPosition(0, 0);
     Console.Write(player);
 }
+
+
+
+/*
+GotFood() method currently checks for exact equality:
+
+bool GotFood()
+{
+    return playerY == foodY && playerX == foodX;
+}
+If the player moves too fast (speed > 1), they might skip over the food without landing exactly on it.
+This causes the food to not be detected as eaten, so ShowFood() never gets called.
+*/
