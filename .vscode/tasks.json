@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "dotnet",
+			"task": "build C:\\Users\\fazius\\GitHub_projects\\helloworld\\helloworld.csproj",
+			"file": "C:\\Users\\fazius\\GitHub_projects\\helloworld\\helloworld.csproj",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "dotnet: build C:\\Users\\fazius\\GitHub_projects\\helloworld\\helloworld.csproj"
+		}
+	]
+}
